@@ -1,0 +1,22 @@
+﻿@if (Films == null)
+{
+    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading..." />
+}
+else if (Films.Count == 0)
+{
+    <div>
+        No hay peliculas disponibles.
+    </div>
+}
+else
+{
+    @foreach (var film in Films)
+    {
+        <FilmDetail Film="film" />
+    }
+}
+
+@code{
+    [Parameter]
+    public List<Film> Films { get; set; }
+}
