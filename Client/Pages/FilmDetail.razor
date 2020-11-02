@@ -4,7 +4,7 @@
     @if (ShowButtons)
     {
         <div>
-            <button @onclick="DeleteFilm">Delete</button>
+            <button @onclick="@(() => DeleteFilm.InvokeAsync(Film))">Delete</button>
         </div>
     }
     <hr />
@@ -17,8 +17,6 @@
     [Parameter]
     public bool ShowButtons { get; set; }
 
-    void DeleteFilm()
-    {
-        Console.WriteLine($"Eliminando la pelicula {Film.Title}.");
-    }
+    [Parameter]
+    public EventCallback<Film> DeleteFilm { get; set; }
 }

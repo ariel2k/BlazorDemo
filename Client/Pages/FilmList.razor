@@ -1,26 +1,20 @@
-﻿@if (Films == null)
-{
-    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading..." />
-}
-else if (Films.Count == 0)
-{
-    <div>
-        No hay peliculas disponibles.
-    </div>
-}
-else
-{
-    <input type="checkbox" @bind="Buttons"/>
+﻿<input type="checkbox" @bind="Buttons" /> Mostrar opciones
 
-    @foreach (var film in Films)
-    {
-        <FilmDetail Film="film" ShowButtons="Buttons" />
-    }
-}
+<GenericList List="Films">
+    <RecordView>
+        <FilmDetail Film="context" ShowButtons="Buttons" DeleteFilm="DeleteFilm" />
+    </RecordView>
+</GenericList>
 
 @code{
     [Parameter]
     public List<Film> Films { get; set; }
 
     public bool Buttons { get; set; }
+
+    void DeleteFilm(Film film)
+    {
+        Films.Remove(film);
+        Console.WriteLine($"Eliminando la pelicula {film.Title}.");
+    }
 }

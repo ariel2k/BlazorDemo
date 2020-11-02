@@ -1,0 +1,45 @@
+﻿@typeparam ItemList
+
+@if (List == null)
+{
+    @if (LoadingAnimation == null)
+    {
+        <text>Cargando...</text>
+    }
+    else
+    {
+        @LoadingAnimation
+    }
+}
+else if (List.Count == 0)
+{
+    @if (NoRecords == null)
+    {
+        <text>No hay registros disponibles.</text>
+    }
+    else
+    {
+        @NoRecords
+    }
+}
+else
+{
+    @foreach (var item in List)
+    {
+        @RecordView(item)
+    }
+}
+
+@code {
+    [Parameter]
+    public RenderFragment LoadingAnimation { get; set; }
+
+    [Parameter]
+    public RenderFragment NoRecords { get; set; }
+
+    [Parameter]
+    public RenderFragment<ItemList> RecordView { get; set; }
+
+    [Parameter]
+    public List<ItemList> List { get; set; }
+}
