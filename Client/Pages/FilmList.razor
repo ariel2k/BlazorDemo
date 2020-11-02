@@ -10,13 +10,17 @@ else if (Films.Count == 0)
 }
 else
 {
+    <input type="checkbox" @bind="Buttons"/>
+
     @foreach (var film in Films)
     {
-        <FilmDetail Film="film" />
+        <FilmDetail Film="film" ShowButtons="Buttons" />
     }
 }
 
 @code{
     [Parameter]
     public List<Film> Films { get; set; }
+
+    public bool Buttons { get; set; }
 }
