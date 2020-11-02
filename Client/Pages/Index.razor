@@ -1,18 +1,11 @@
 ﻿@page "/"
+@inject IRepository repository
 
 <h1>Films</h1>
 
-<FilmList Films="GetFilms()" >
+<FilmList Films="GetFilms()">
 </FilmList>
 
 @code{
-    private List<Film> GetFilms()
-    {
-        return new List<Film>()
-        {
-            new Film() {Title="Spider-man: Far from home", ReleaseDate=new DateTime(2019,7,2)},
-            new Film() {Title="Moana", ReleaseDate=new DateTime(2016,11,23)},
-            new Film() {Title="Inception", ReleaseDate=new DateTime(2010,7,16)},
-        };
-    }
+    private List<Film> GetFilms() => repository.GetFilms();
 }
