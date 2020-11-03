@@ -1,4 +1,6 @@
-﻿<input type="checkbox" @bind="Buttons" /> Mostrar opciones
+﻿@inject IJSRuntime js
+
+<input type="checkbox" @bind="Buttons" /> Mostrar opciones
 
 <GenericList List="Films">
     <RecordView>
@@ -12,9 +14,13 @@
 
     public bool Buttons { get; set; }
 
-    void DeleteFilm(Film film)
+    async Task DeleteFilm(Film film)
     {
-        Films.Remove(film);
-        Console.WriteLine($"Eliminando la pelicula {film.Title}.");
+        var confirm = await js.Confirm($"desea borrar la pelicula {film.Title}?");
+        if (confirm)
+        {
+            Films.Remove(film);
+            Console.WriteLine($"Eliminando la pelicula {film.Title}.");
+        }
     }
 }
