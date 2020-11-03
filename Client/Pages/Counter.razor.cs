@@ -18,9 +18,6 @@ namespace BlazorDemo.Client.Pages
         [Inject]
         protected TransientService Transient { get; set; }
 
-        [CascadingParameter]
-        protected AppState AppState { get; set; }
-
         protected void IncrementCount()
         {
             currentCount++;

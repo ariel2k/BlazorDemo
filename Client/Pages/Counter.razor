@@ -2,27 +2,7 @@
 
 @inherits CounterBase
 
-<h1 style="color: @AppState.Color">Counter</h1>
-
-<div style="display:flex">
-    <div style="width: 150px">
-        <select @bind="@AppState.Color" class="form-control" style="margin-top: 15px">
-            <option value="green">Verde</option>
-            <option value="red">Rojo</option>
-            <option value="blue">Azul</option>
-        </select>
-    </div>
-    <div style="width: 150px">
-        <select @bind="@AppState.Size" class="form-control" style="margin-top: 15px">
-            <option value="12px">Chico</option>
-            <option value="20px">Mediano</option>
-            <option value="30px">Grande</option>
-        </select>
-    </div>
-</div>
-
-<p style="color: @AppState.Color; font-size: @AppState.Size" >Current count: @currentCount</p>
-<p>Singleton count: @Singleton.Value</p>
-<p>Transient count: @Transient.Value</p>
+<h1>Counter</h1>
+<p>Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>

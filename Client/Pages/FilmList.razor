@@ -1,48 +1,24 @@
 ﻿@inject IJSRuntime js
 
-<input type="checkbox" @bind="Buttons" /> Mostrar opciones
-
-<GenericList List="Films">
-    <RecordView>
-        <FilmDetail Film="context" ShowButtons="Buttons" DeleteFilm="DeleteFilm" />
-    </RecordView>
-</GenericList>
-
-<ConfirmModal @ref="confirmModal" onConfirm="DeleteFilmConfirm" onCancel="OnCancelConfirm">
-    <div>¿Desea borrar la película?</div>
-</ConfirmModal>
+<div style="display:flex; flex-wrap: wrap; align-items:center">
+    <GenericList List="Films">
+        <RecordView>
+            <FilmDetail Film="context" DeleteFilm="DeleteFilm" />
+        </RecordView>
+    </GenericList>
+</div>
 
 @code{
-
     [Parameter]
     public List<Film> Films { get; set; }
 
-    public bool Buttons { get; set; }
-
-    ConfirmModal confirmModal;
-    Film filmToDelete;
-
-    void DeleteFilm(Film film)
+    async Task DeleteFilm(Film film)
     {
-        confirmModal.Show();
-        filmToDelete = film;
-        //var confirm = await js.Confirm($"desea borrar la pelicula {film.Title}?");
-        //if (confirm)
-        //{
-        //    Films.Remove(film);
-        //    Console.WriteLine($"Eliminando la pelicula {film.Title}.");
-        //}
-    }
-
-    void DeleteFilmConfirm()
-    {
-        Films.Remove(filmToDelete);
-        OnCancelConfirm();
-    }
-
-    void OnCancelConfirm()
-    {
-        confirmModal.Hide();
-        filmToDelete = null;
+        var confirm = await js.Confirm($"desea borrar la pelicula {film.Title}?");
+        if (confirm)
+        {
+            Films.Remove(film);
+            Console.WriteLine($"Eliminando la pelicula {film.Title}.");
+        }
     }
 }
