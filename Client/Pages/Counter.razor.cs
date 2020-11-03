@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BlazorDemo.Client.Shared.MainLayout;
 
 namespace BlazorDemo.Client.Pages
 {
@@ -16,6 +17,9 @@ namespace BlazorDemo.Client.Pages
 
         [Inject]
         protected TransientService Transient { get; set; }
+
+        [CascadingParameter]
+        protected AppState AppState { get; set; }
 
         protected void IncrementCount()
         {
