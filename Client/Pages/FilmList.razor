@@ -8,19 +8,41 @@
     </RecordView>
 </GenericList>
 
+<ConfirmModal @ref="confirmModal" onConfirm="DeleteFilmConfirm" onCancel="OnCancelConfirm">
+    <div>¿Desea borrar la película?</div>
+</ConfirmModal>
+
 @code{
+
     [Parameter]
     public List<Film> Films { get; set; }
 
     public bool Buttons { get; set; }
 
-    async Task DeleteFilm(Film film)
+    ConfirmModal confirmModal;
+    Film filmToDelete;
+
+    void DeleteFilm(Film film)
     {
-        var confirm = await js.Confirm($"desea borrar la pelicula {film.Title}?");
-        if (confirm)
-        {
-            Films.Remove(film);
-            Console.WriteLine($"Eliminando la pelicula {film.Title}.");
-        }
+        confirmModal.Show();
+        filmToDelete = film;
+        //var confirm = await js.Confirm($"desea borrar la pelicula {film.Title}?");
+        //if (confirm)
+        //{
+        //    Films.Remove(film);
+        //    Console.WriteLine($"Eliminando la pelicula {film.Title}.");
+        //}
+    }
+
+    void DeleteFilmConfirm()
+    {
+        Films.Remove(filmToDelete);
+        OnCancelConfirm();
+    }
+
+    void OnCancelConfirm()
+    {
+        confirmModal.Hide();
+        filmToDelete = null;
     }
 }
