@@ -1,0 +1,88 @@
+﻿@page "/films/find"
+@inject IRepository repository
+
+<h3>FilterFilms</h3>
+
+<div class="form-inline">
+    <div class="form-group mb-2">
+        <label for="title" class="sr-only">Title</label>
+        <input @bind-value="title" @bind-value:event="oninput"
+               @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))"
+               type="text" class="form-control" id="title"/>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <select class="form-control" @bind="selectGender">
+            <option value="0">-- Select one gender --</option>
+            @foreach (var gender in genders)
+            {
+                <option value="@gender.Id">@gender.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="checkbox" class="form-check-input" id="premieres" @bind="nextPremieres"/>
+        <label class="form-check-label" for="premieres">
+            Premieres
+        </label>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="checkbox" class="form-check-input" id="billboard" @bind="onBillboard"/>
+        <label class="form-check-label" for="billboard">
+            Billboard
+        </label>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="checkbox" class="form-check-input" id="mostVoted" @bind="mostVoted"/>
+        <label class="form-check-label" for="mostVoted">
+            Most Voted
+        </label>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary mb-2 mx-sm-3" @onclick="LoadNewFilms">Filter</button>
+<button type="button" class="btn btn-danger mb-2" @onclick="CleanOnClik">Clean</button>
+
+<FilmList Films="FilterFilm"></FilmList>
+
+@code {
+    string title = "";
+    string selectGender = "0";
+
+    private bool nextPremieres;
+    private bool onBillboard;
+    private bool mostVoted;
+
+    List<Gender> genders = new List<Gender>();
+    private List<Film> FilterFilm = new List<Film>();
+
+    protected override void OnInitialized()
+    {
+        FilterFilm = repository.GetFilms();
+    }
+
+    private void TitleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            LoadNewFilms();
+        }
+    }
+
+    private void LoadNewFilms()
+    {
+        FilterFilm = FilterFilm.Where(f =>
+            f.Title.ToLower().Contains(title.ToLower()))
+            .ToList();
+        Console.WriteLine("Load new films");
+    }
+
+    private void CleanOnClik()
+    {
+        FilterFilm = repository.GetFilms();
+        title = "";
+        selectGender = "0";
+        nextPremieres = false;
+        onBillboard = false;
+        mostVoted = false;
+    }
+}

@@ -1,7 +1,14 @@
 ﻿@page "/genders/create"
 
-<h3>CreateGender</h3>
+<h3>Create Gender</h3>
+
+<GenderForm OnValidSubmit="Create" Gender="Gender" />
 
 @code {
+    private Gender Gender = new Gender();
 
+    private void Create()
+    {
+        Console.WriteLine($"Create gender: {Gender.Name}");
+    }
 }
