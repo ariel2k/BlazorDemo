@@ -1,0 +1,12 @@
+﻿@page "/films/{FilmId:int}"
+@page "/films/{FilmId:int}/{FilmName}"
+
+<h3>ViewFilm: @FilmId - @FilmName</h3>
+
+@code {
+    [Parameter]
+    public int FilmId { get; set; }
+
+    [Parameter]
+    public string FilmName { get; set; }
+}

@@ -1,8 +1,12 @@
 ﻿<div style="margin-right: 2%; margin-bottom: 10px; text-align:center;">
-    <a>
+    <a href="@urlFilm">
         <img src="@Film.ImgURL" style="width:225px; height:300px;"/>
     </a>
-    <p style="max-width:225px; height:44px; font-size:15px; font-weight:bold;">@Film.ShortTitle</p>
+    <p style="max-width:225px; height:44px; font-size:15px; font-weight:bold;">
+        <a href="@urlFilm">
+            @Film.ShortTitle
+        </a>
+    </p>
     <div>
         <a class="btn btn-info">Editar</a>
         <button type="button" class="btn btn-danger" 
@@ -21,4 +25,11 @@
 
     [Parameter]
     public EventCallback<Film> DeleteFilm { get; set; }
+
+    private string urlFilm = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        urlFilm = $"films/";
+    }
 }

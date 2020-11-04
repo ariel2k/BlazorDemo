@@ -1,0 +1,12 @@
+﻿@page "/films/create"
+@inject NavigationManager nv
+<h3>Create Film</h3>
+
+<button @onclick="Create">Create film</button>
+
+@code {
+    void Create()
+    {
+        nv.NavigateTo("/films/");
+    }
+}
