@@ -14,8 +14,10 @@
         <label>Picture: </label>
         <InputImg Label="Photo" SelectedImage="SelectedImage" ImageTemp=""/>
     </div>
-    <div class="form-group">
-        <label>Biography: </label>
+    <div class="form-group form-markdown">
+        <InputMarkdown @bind-Value="@Person.Biography"
+                       For="@(() => Person.Biography)"
+                       Label="Biography" />
     </div>
 
     <button class="btn btn-success" type="submit">Create Person</button>
