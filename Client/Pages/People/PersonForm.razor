@@ -1,0 +1,46 @@
+﻿<EditForm Model="Person" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Name: </label>
+        <InputText class="form-control" @bind-Value="@Person.Name" />
+        <ValidationMessage For="@(() => Person.Name)" />
+    </div>
+    <div class="form-group">
+        <label>Birthdate: </label>
+        <InputDate class="form-control" @bind-Value="@Person.Birthdate" />
+        <ValidationMessage For="@(() => Person.Birthdate)" />
+    </div>
+    <div class="form-group">
+        <label>Picture: </label>
+        <InputImg Label="Photo" SelectedImage="SelectedImage" ImageTemp=""/>
+    </div>
+    <div class="form-group">
+        <label>Biography: </label>
+    </div>
+
+    <button class="btn btn-success" type="submit">Create Person</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Person Person { get; set; }
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    private string imageTemporal;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(Person.Picture))
+        {
+            imageTemporal = Person.Picture;
+            Person.Picture = null;
+        }
+    }
+
+    private void SelectedImage(string imageBase64)
+    {
+        Person.Picture = imageBase64;
+    }
+}
