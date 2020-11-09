@@ -1,8 +1,42 @@
 ﻿@page "/films/edit/{FilmId:int}"
 
 <h3>EditFilm</h3>
+<FilmForm Film="Film" OnValidSubmit="Edit" GendersNotSelected="GenderNoSelected" GendersSelected="GenderSelected">
 
+</FilmForm>
 @code {
     [Parameter]
     public int FilmId { get; set; }
+
+    Film Film = new Film();
+
+    private List<Gender> GenderNoSelected = new List<Gender>();
+    private List<Gender> GenderSelected = new List<Gender>();
+
+    protected override void OnInitialized()
+    {
+        Film = new Film()
+        {
+            Id = FilmId,
+            Title = "My film"
+        };
+
+        GenderNoSelected = new List<Gender>()
+        {
+            new Gender(){Id = 1, Name = "Comedia"},
+            new Gender(){Id = 2, Name = "Drama"},
+            new Gender(){Id = 4, Name = "Sci-fi"}
+        };
+
+
+        GenderSelected = new List<Gender>()
+        {
+            new Gender(){Id = 3, Name = "Acción"}
+        };
+    }
+
+    void Edit()
+    {
+
+    }
 }

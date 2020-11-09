@@ -1,0 +1,78 @@
+﻿<EditForm Model="Film" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Title:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Film.Title" />
+            <ValidationMessage For="@(() => Film.Title)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>OnBillboard:</label>
+        <div>
+            <InputCheckbox @bind-Value="@Film.OnBillboard" />
+            <ValidationMessage For="@(() => Film.OnBillboard)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Trailer:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Film.TrailerURL" />
+            <ValidationMessage For="@(() => Film.TrailerURL)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>ReleaseDate:</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Film.ReleaseDate" />
+            <ValidationMessage For="@(() => Film.ReleaseDate)" />
+        </div>
+    </div>
+    <div class="form-group form-markdown">
+        <InputMarkdown @bind-Value="@Film.Summary"
+                       For="@(() => Film.Summary)"
+                       Label="Summary" />
+    </div>
+    <div class="form-group">
+        <InputImg Label="Foto" SelectedImage="SelectedImage" ImageTemp="" />
+    </div>
+    <div class="form-group">
+        <label>Géneros:</label>
+        <div>
+            <MultipleSelector Selected="Selected"
+                              NoSelected="NoSelected">
+
+            </MultipleSelector>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Film</button>
+</EditForm>
+
+@code {
+    [Parameter] public Film Film { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public List<Gender> GendersSelected { get; set; } = new List<Gender>();
+    [Parameter] public List<Gender> GendersNotSelected { get; set; } = new List<Gender>();
+
+    private List<SelectorMultipleModel> Selected { get; set; } = new List<SelectorMultipleModel>();
+    private List<SelectorMultipleModel> NoSelected { get; set; } = new List<SelectorMultipleModel>();
+    private string posterTemporal;
+
+    protected override void OnInitialized()
+    {
+        Selected = GendersSelected.Select(x => new SelectorMultipleModel(x.Id.ToString(), x.Name)).ToList();
+        NoSelected = GendersNotSelected.Select(x => new SelectorMultipleModel(x.Id.ToString(), x.Name)).ToList();
+        if (!string.IsNullOrWhiteSpace(Film.ImgURL))
+        {
+            posterTemporal = Film.ImgURL;
+            Film.ImgURL = null;
+        }
+    }
+
+    private void SelectedImage(string imagenBase64)
+    {
+        Film.ImgURL = imagenBase64;
+    }
+
+}

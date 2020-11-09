@@ -2,9 +2,25 @@
 @inject NavigationManager nv
 <h3>Create Film</h3>
 
-<button @onclick="Create">Create film</button>
+<FilmForm Film="Film" OnValidSubmit="Create" GendersNotSelected="GenderNoSelected">
+
+</FilmForm>
 
 @code {
+    private Film Film = new Film();
+    private List<Gender> GenderNoSelected = new List<Gender>();
+    protected override void OnInitialized()
+    {
+        GenderNoSelected = new List<Gender>()
+        {
+            new Gender(){Id = 1, Name = "Comedia"},
+            new Gender(){Id = 2, Name = "Drama"},
+            new Gender(){Id = 3, Name = "Acción"},
+            new Gender(){Id = 4, Name = "Sci-fi"}
+        };
+    }
+
+
     void Create()
     {
         nv.NavigateTo("/films/");
