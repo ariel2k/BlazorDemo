@@ -45,7 +45,22 @@
             </MultipleSelector>
         </div>
     </div>
-
+    <div class="form-group">
+        <label>Actores:</label>
+        <div>
+            <SelectorMultipleTypeahead Context="persona"
+                                       SearchMethod="FindCharacters"
+                                       SelectedItems="CharactersSelected">
+                <MyListTemplate>
+                    @persona.Name
+                </MyListTemplate>
+                <MyResultTemplate>
+                    <img style="width: 50px" src="@persona.Picture" />
+                    @persona.Name
+                </MyResultTemplate>
+            </SelectorMultipleTypeahead>
+        </div>
+    </div>
     <button type="submit" class="btn btn-success">Save Film</button>
 </EditForm>
 
@@ -54,7 +69,7 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public List<Gender> GendersSelected { get; set; } = new List<Gender>();
     [Parameter] public List<Gender> GendersNotSelected { get; set; } = new List<Gender>();
-
+    [Parameter] public List<Person> CharactersSelected { get; set; } = new List<Person>();
     private List<SelectorMultipleModel> Selected { get; set; } = new List<SelectorMultipleModel>();
     private List<SelectorMultipleModel> NoSelected { get; set; } = new List<SelectorMultipleModel>();
     private string posterTemporal;
@@ -75,4 +90,12 @@
         Film.ImgURL = imagenBase64;
     }
 
+    private async Task<IEnumerable<Person>> FindCharacters(string searchText)
+    {
+        return new List<Person>()
+        {
+            new Person(){Id=1, Name="Tom Holland", Picture = "https://m.media-amazon.com/images/M/MV5BNTAzMzA3NjQwOF5BMl5BanBnXkFtZTgwMDUzODQ5MTI@._V1_UY317_CR23,0,214,317_AL_.jpg"},
+            new Person(){Id=2, Name="Tom Hanks", Picture = "https://m.media-amazon.com/images/M/MV5BMTQ2MjMwNDA3Nl5BMl5BanBnXkFtZTcwMTA2NDY3NQ@@._V1_UY317_CR2,0,214,317_AL_.jpg"}
+        };
+    }
 }
