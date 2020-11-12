@@ -8,5 +8,9 @@ namespace BlazorDemo.Shared.Models
     {
         public int FilmId{ get; set; }
         public int GenderId{ get; set; }
+        
+        public Gender Gender { get; set; }
+        
+        public Film Film { get; set; }
     }
 }

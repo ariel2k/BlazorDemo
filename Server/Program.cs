@@ -21,6 +21,13 @@ namespace BlazorDemo.Server
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureHostConfiguration(configHost =>
+                {
+                    configHost.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    //configHost.AddEnvironmentVariables(prefix: "PREFIX_");
+                    configHost.AddCommandLine(args);
                 });
+
     }
 }

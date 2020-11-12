@@ -11,5 +11,6 @@ namespace BlazorDemo.Shared.Models
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Name { get; set; }
+        public List<GenderFilm> GenderFilms { get; set; }
     }
 }

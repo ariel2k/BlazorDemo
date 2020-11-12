@@ -15,6 +15,8 @@ namespace BlazorDemo.Shared.Models
         [Required]
         public DateTime? Birthdate { get; set; }
 
+        public List<PersonFilm> PersonFilms { get; set; }
+
         public override bool Equals(object obj)
         {
             if (obj is Person p2)

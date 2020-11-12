@@ -17,6 +17,7 @@ namespace BlazorDemo.Shared.Models
         public string TrailerURL { get; set; }
         public string ImgURL { get; set; }
         public List<GenderFilm> GenderFilms { get; set; } = new List<GenderFilm>();
+        public List<PersonFilm> PersonFilms { get; set; }
         public string ShortTitle { 
             get {
                 if (string.IsNullOrEmpty(Title))
