@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using BlazorDemo.Client.Services;
 using BlazorDemo.Client.Repositories;
 using Blazor.FileReader;
+using BlazorDemo.Client.Helpers;
 
 namespace BlazorDemo.Client
 {
@@ -32,6 +33,7 @@ namespace BlazorDemo.Client
             services.AddSingleton<SingletonService>();
             services.AddTransient<TransientService>();
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IShowMessages, ShowMessages>();
             services.AddFileReaderService(options => options.InitializeOnFirstCall = true);
         }
     }

@@ -18,5 +18,10 @@ namespace BlazorDemo.Client.Repositories
             Response = response;
             HttpResponseMessage = httpResponseMessage;
         }
+
+        public async Task<string> GetBody()
+        {
+            return await HttpResponseMessage.Content.ReadAsStringAsync();
+        }
     }
 }

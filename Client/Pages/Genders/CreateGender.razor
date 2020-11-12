@@ -1,6 +1,8 @@
 ﻿@page "/genders/create"
 @inject IRepository repository
 @inject NavigationManager navigationManager
+@inject IShowMessages showMessages
+
 <h3>Create Gender</h3>
 
 <GenderForm OnValidSubmit="Create" Gender="Gender" />
@@ -13,8 +15,7 @@
         var httpResponse = await repository.Post("api/gender", Gender);
         if (httpResponse.Error)
         {
-            var body = await httpResponse.HttpResponseMessage.Content.ReadAsStringAsync();
-            Console.WriteLine(body);
+            await showMessages.ShowErrorMessage(await httpResponse.GetBody());
         }
         else
         {

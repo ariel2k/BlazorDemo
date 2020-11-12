@@ -1,4 +1,7 @@
 ﻿@page "/people/create"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject IShowMessages showMessages 
 
 <h3>Create Person</h3>
 
@@ -7,8 +10,17 @@
 @code {
     private Person Person = new Person();
 
-    void Create()
+    private async Task Create()
     {
-
+        var httpResponse = await repository.Post("api/person", Person);
+        if (httpResponse.Error)
+        {
+            await showMessages.ShowErrorMessage(await httpResponse.GetBody());
+        }
+        else
+        {
+            navigationManager.NavigateTo("/people");
+        }
     }
 }
+ 
