@@ -1,5 +1,6 @@
 ﻿@page "/genders/create"
-
+@inject IRepository repository
+@inject NavigationManager navigationManager
 <h3>Create Gender</h3>
 
 <GenderForm OnValidSubmit="Create" Gender="Gender" />
@@ -7,8 +8,17 @@
 @code {
     private Gender Gender = new Gender();
 
-    private void Create()
+    private async Task Create()
     {
-        Console.WriteLine($"Create gender: {Gender.Name}");
+        var httpResponse = await repository.Post("api/gender", Gender);
+        if (httpResponse.Error)
+        {
+            var body = await httpResponse.HttpResponseMessage.Content.ReadAsStringAsync();
+            Console.WriteLine(body);
+        }
+        else
+        {
+            navigationManager.NavigateTo("/genders");
+        }
     }
 }

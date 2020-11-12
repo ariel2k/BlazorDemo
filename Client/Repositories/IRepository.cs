@@ -9,5 +9,6 @@ namespace BlazorDemo.Client.Repositories
     public interface IRepository
     {
         List<Film> GetFilms();
+        Task<HttpResponseWrapper<object>> Post<T>(string url, T send);
     }
 }

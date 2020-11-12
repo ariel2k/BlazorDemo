@@ -2,12 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BlazorDemo.Client.Repositories
 {
     public class Repository : IRepository
     {
+
+        public Repository(HttpClient httpClient)
+        {
+            HttpClient = httpClient;
+        }
+
+        public HttpClient HttpClient { get; }
+
         public List<Film> GetFilms()
         {
             return new List<Film>()
@@ -31,6 +42,14 @@ namespace BlazorDemo.Client.Repositories
                     ImgURL="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg"
                 },
             };
+        }
+
+        public async Task<HttpResponseWrapper<object>> Post<T>(string url, T send)
+        {
+            var sendJson = JsonSerializer.Serialize(send);
+            var sendContent = new StringContent(sendJson, Encoding.UTF8, "application/json");
+            var responseHttp = await HttpClient.PostAsync(url, sendContent);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
     }
 }
