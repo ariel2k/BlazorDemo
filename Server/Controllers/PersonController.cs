@@ -1,4 +1,5 @@
-﻿using BlazorDemo.Shared.Models;
+﻿using BlazorDemo.Server.Helpers;
+using BlazorDemo.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,24 @@ namespace BlazorDemo.Server.Controllers
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
-        public PersonController(ApplicationDbContext context)
+        public PersonController(ApplicationDbContext context, IFileStorage fileStorage)
         {
             Context = context;
+            this.fileStorage = fileStorage;
         }
 
         public ApplicationDbContext Context { get; }
+        private readonly IFileStorage fileStorage;
 
         [HttpPost]
         public async Task<ActionResult<int>> Post(Person person)
         {
+            if (!string.IsNullOrWhiteSpace(person.Picture))
+            {
+                var picture = Convert.FromBase64String(person.Picture);
+                person.Picture = await fileStorage.SaveFile(picture, "jpg", "people");
+            }
+
             Context.Add(person);
             await Context.SaveChangesAsync();
             return person.Id;

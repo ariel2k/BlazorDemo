@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BlazorDemo.Server.Helpers;
 
 namespace BlazorDemo.Server
 {
@@ -25,7 +26,10 @@ namespace BlazorDemo.Server
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllersWithViews();
+            //services.AddScoped<IFileStorage, FileStorageAzureStorage>();
+            services.AddScoped<IFileStorage, FileStorageLocalFiles>();
+            services.AddHttpContextAccessor();
+            services.AddControllersWithViews(); 
             services.AddRazorPages();
         }
 
